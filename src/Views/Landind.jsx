@@ -1,8 +1,12 @@
+import Banner from "../Components/Banner";
+import "../Components/style.css"
+
 const Landing = () => {
     return ( 
         <>
             <section>
-                <h className="text-center">Landing Page</h>
+                <Banner />
+                <h2 className="text-center ">Landing Page</h2>
             </section>
         </>
      );
