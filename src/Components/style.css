@@ -6,8 +6,16 @@ nav{
     background-color: #001F3F
 }
 .nav-text{
-    font-family: ;
     letter-spacing: 2px;
     color: #A9A9A9;
     font-size: 1.5em;
+}
+
+.text_color{
+    color: #001F3F
+}
+.sectionbg{
+    background-image: url(../assets/images/spaceX2.jpg);
+    background-size: cover;
+    height: 100%;
 }

@@ -1,4 +1,5 @@
 import Banner from "../Components/Banner";
+import Section from "../Components/MainSection";
 import "../Components/style.css"
 
 const Landing = () => {
@@ -6,7 +7,9 @@ const Landing = () => {
         <>
             <section>
                 <Banner />
-                <h2 className="text-center ">Landing Page</h2>
+                <div className="px-20">
+                <Section />
+                </div>
             </section>
         </>
      );
