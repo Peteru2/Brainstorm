@@ -14,8 +14,8 @@ const [loading, setLoading] = useState(true);
         .then((response) => {
 
             // Handle the successful response
-            setData(response.data.data);
-            console.log(response.data.data)
+            setData(response.data);
+            console.log(response)
             setLoading(false)
                     })
         .catch((error) => {
