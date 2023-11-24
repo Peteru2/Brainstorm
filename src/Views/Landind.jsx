@@ -8,7 +8,7 @@ const Landing = () => {
         <>
             <section>
                 <Banner />
-                <div className="px-20">
+                <div className="px-44">
                 <Section />
                 <DataGrid />
                 </div>
