@@ -1,4 +1,4 @@
-import useFetch from "../data/usefetch";
+import useFetch from "../data/useFetch";
 import { useState, useEffect } from "react";
 import Pagination from "./Pagination";
 import CapsuleSearch from "./CapsuleSearch";
