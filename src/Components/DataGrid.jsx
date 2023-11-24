@@ -1,12 +1,14 @@
 import useFetch from "../data/usefetch";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Pagination from "./Pagination";
+import CapsuleSearch from "./CapsuleSearch";
 import X from "../assets/images/X.svg"
 
 const DataGrid = () => {
     const [selectedItemIndex, setSelectedItemIndex] = useState(null);
     const [preview, setPreview] = useState(false)
     const {data, loading } = useFetch('https://api.spacexdata.com/v3/capsules')
+    const [paginatedData, setPaginatedData] = useState(null)
     // console.log(data[1].status)
     const handlePreview = (itemIndex) =>{
         
@@ -17,24 +19,45 @@ const DataGrid = () => {
         setSelectedItemIndex(null);
         setPreview(false);
     }
+    const handleSearch = (searchTerm) => {
+        if (!data) return; // Ensure data is available
+      
+        const searchTermLower = searchTerm.toLowerCase();
+        const filteredData = Object.values(data).filter(item =>
+          item.capsule_serial.toLowerCase().includes(searchTermLower)
+        );
+      
+        setPaginatedData(filteredData.slice(startIndex, endIndex));
+      };
             const [currentPage, setCurrentPage] = useState(1);
             const itemsPerPage = 10; 
 
             const startIndex = (currentPage - 1) * itemsPerPage;
             const endIndex = startIndex + itemsPerPage;
 
-            const paginatedData = data && data ? Object.values(data).slice(startIndex, endIndex) : [];
+            useEffect(() => {
+                // Ensure data is available before updating paginatedData
+                if (data) {
+                  setPaginatedData(Object.values(data).slice(startIndex, endIndex));
+                }
+              }, [data, startIndex, endIndex]);
+            
 
             const totalPages = data && data ? Math.ceil(Object.values(data).length / itemsPerPage) : 0;
             // const currentSerialNumber = (currentPage - 1) * itemsPerPage + 1
     return ( 
         <>
-                <section className="mt-14">
+                <section className="mt-14">\
+                <CapsuleSearch onSearch={handleSearch} />
                     <div>
                         <h3 className="text-center text_color text-4xl mb-4">DATA GRID</h3>
                     </div>
         <div className="flex justify-center flex-wrap ">
-            {paginatedData.map((item, index)=>(
+            
+            {loading ? ( 
+            <div className="text-center text_color">
+                Loading...
+            </div>):( paginatedData.map((item, index)=>(
                             <div className="my-3 md:w-44 w-52 mx-8 bg-white shadow-lg rounded-md ">
                                 <div className="p-8">
                                 <p className="text-center mb-3">{item.capsule_serial}</p>
@@ -47,7 +70,8 @@ const DataGrid = () => {
                             </div>
             )
 
-            )}
+            ))
+        }
              <div className={`modal ${preview ? "modal-show":""}`}> 
                         {
                             selectedItemIndex !== null && (
