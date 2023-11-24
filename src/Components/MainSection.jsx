@@ -3,7 +3,7 @@ import SpaceX from "../assets/images/spaceX.jpg"
 const Section = () => {
     return ( 
         <>
-            <section className="mt-6 " >
+            <section className="mt-16 " >
                 <div className="grid md:grid-cols-2 grid-cols-1 gap-10 items-center">
                     <div className="md:order-first order-last">
                         <h2 className="text-4xl font-bold my-4 text_color "> Discover the Universe: <br />

@@ -29,8 +29,11 @@ const DataGrid = () => {
             // const currentSerialNumber = (currentPage - 1) * itemsPerPage + 1
     return ( 
         <>
-                <section>
-        <div className="flex justify-center flex-wrap mt-10">
+                <section className="mt-14">
+                    <div>
+                        <h3 className="text-center text_color text-4xl mb-4">DATA GRID</h3>
+                    </div>
+        <div className="flex justify-center flex-wrap ">
             {paginatedData.map((item, index)=>(
                             <div className="my-3 md:w-44 w-52 mx-8 bg-white shadow-lg rounded-md ">
                                 <div className="p-8">
