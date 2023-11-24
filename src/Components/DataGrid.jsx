@@ -1,6 +1,7 @@
 import useFetch from "../data/usefetch";
 import { useState } from "react";
 import Pagination from "./Pagination";
+import X from "../assets/images/X.svg"
 
 const DataGrid = () => {
     const [selectedItemIndex, setSelectedItemIndex] = useState(null);
@@ -12,6 +13,10 @@ const DataGrid = () => {
         setSelectedItemIndex(itemIndex);
         setPreview(true);
     }
+    const handleClosePreview = () =>{
+        setSelectedItemIndex(null);
+        setPreview(false);
+    }
             const [currentPage, setCurrentPage] = useState(1);
             const itemsPerPage = 10; 
 
@@ -19,16 +24,15 @@ const DataGrid = () => {
             const endIndex = startIndex + itemsPerPage;
 
             const paginatedData = data && data ? Object.values(data).slice(startIndex, endIndex) : [];
-            console.log(paginatedData)
 
             const totalPages = data && data ? Math.ceil(Object.values(data).length / itemsPerPage) : 0;
-            const currentSerialNumber = (currentPage - 1) * itemsPerPage + 1
+            // const currentSerialNumber = (currentPage - 1) * itemsPerPage + 1
     return ( 
         <>
                 <section>
         <div className="flex justify-center flex-wrap mt-10">
             {paginatedData.map((item, index)=>(
-                            <div className="my-3 mx-8 bg-white shadow-lg rounded-md ">
+                            <div className="my-3 md:w-44 w-52 mx-8 bg-white shadow-lg rounded-md ">
                                 <div className="p-8">
                                 <p className="text-center mb-3">{item.capsule_serial}</p>
                                 {/* <p>{item.details === ""?"No details":item.details}</p> */}
@@ -42,13 +46,28 @@ const DataGrid = () => {
 
             )}
              <div className={`modal ${preview ? "modal-show":""}`}> 
-                    
+                        {
+                            selectedItemIndex !== null && (
+                                <div className="">
+                                    <div className="flex w-full mb-4">
+                                        <h2 className="text-gray-500 text-sm">{paginatedData[selectedItemIndex].capsule_serial} Details</h2>
+                                        <p className="ml-auto cursor-pointer"><img src={X} alt="closeButton" onClick={handleClosePreview} /></p>
+                                        </div>
+                                   <h2 className="text-sm my-2"><span className="text_color">Description:</span> {paginatedData[selectedItemIndex].details}</h2>
+                                   <h2 className="text-sm"><span className="text_color">Status: </span>{paginatedData[selectedItemIndex].status}</h2>
+                                   <h2 className="text-sm"><span className="text_color">Original launch:</span> {new Date(paginatedData[selectedItemIndex].original_launch).toDateString('en-US')}</h2>
+
+                                </div>
+                            )
+                        }
              </div>
         </div>
                 {totalPages > 1 && (
                      <Pagination totalPages={totalPages} onPageChange={setCurrentPage} />
                              )}
                 </section>
+                <div className={preview?"overlay":""}></div>
+
         </>
      );
 }
