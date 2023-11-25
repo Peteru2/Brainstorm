@@ -5,7 +5,7 @@ const CapsuleSearch = ({ onSearch }) => {
   const [searchBy, setSearchBy] = useState('capsule_serial');
 
   const handleSearch = () => {
-    // Pass the search term and search criteria to the parent component
+    
     onSearch(searchTerm, searchBy);
   };
 
@@ -16,13 +16,20 @@ const CapsuleSearch = ({ onSearch }) => {
         <input
           type="text"
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+            ; 
+          }}
+          onKeyUp={()=>handleSearch()}
           placeholder={`Search by ${searchBy === 'capsule_serial' ? 'capsule serial' : searchBy}...`}
-          className="border rounded py-1 px-2 mr-2 w-full"
+          className="border rounded py-1 px-2 mr-2 w-full outline-none"
         />
         <select
           value={searchBy}
-          onChange={(e) => setSearchBy(e.target.value)}
+          onChange={(e) => {
+            setSearchBy(e.target.value);
+            handleSearch(); 
+          }}
           className="border rounded py-1 px-2 mr-2 outline-none"
         >
           <option value="capsule_serial">Capsule Serial</option>
@@ -30,7 +37,6 @@ const CapsuleSearch = ({ onSearch }) => {
           <option value="original_launch">Original Launch</option>
           <option value="type">Type</option>
         </select>
-        <button onClick={handleSearch} className="bg_color text-white rounded px-3 py-1">Search</button>
       </div>
     </div>
   );

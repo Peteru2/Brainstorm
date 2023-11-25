@@ -9,6 +9,9 @@ const DataGrid = () => {
     const [preview, setPreview] = useState(false)
     const {data, loading } = useFetch('https://api.spacexdata.com/v3/capsules')
     const [paginatedData, setPaginatedData] = useState(null)
+    const [searchTerm, setSearchTerm] = useState('');
+    const [searchBy, setSearchBy] = useState('capsule_serial');
+    const [dataFound, setDataFound] = useState(true);
     // console.log(data[1].status)
     const handlePreview = (itemIndex) =>{
         
@@ -19,20 +22,23 @@ const DataGrid = () => {
         setSelectedItemIndex(null);
         setPreview(false);
     }
-    const handleSearch = (searchTerm, searchBy) => {
-        if (!data) return; // Ensure data is available
+    const handleSearch = (term, searchBy) => {
+        setSearchTerm(term);
+        setSearchBy(searchBy);
       
-        const searchTermLower = searchTerm.toLowerCase();
+        if (!data) return; 
       
-        // Filter data based on the selected searchBy option
-        const filteredData = Object.values(data).filter(item => {
+        const termLower = term.toLowerCase();
+      
+       
+        const filteredData = Object.values(data).filter((item) => {
           const valueToSearch = item[searchBy].toLowerCase();
-          return valueToSearch.includes(searchTermLower);
+          return valueToSearch.includes(termLower);
         });
       
         setPaginatedData(filteredData.slice(startIndex, endIndex));
+        setDataFound(filteredData.length > 0);
       };
-       
             const [currentPage, setCurrentPage] = useState(1);
             const itemsPerPage = 10; 
 
@@ -40,7 +46,7 @@ const DataGrid = () => {
             const endIndex = startIndex + itemsPerPage;
 
             useEffect(() => {
-                // Ensure data is available before updating paginatedData
+                
                 if (data) {
                   setPaginatedData(Object.values(data).slice(startIndex, endIndex));
                 }
@@ -61,7 +67,7 @@ const DataGrid = () => {
             {loading ? ( 
             <div className="text-center text_color">
                 Loading...
-            </div>):( paginatedData.map((item, index)=>(
+            </div>): dataFound ?( paginatedData.map((item, index)=>(
                             <div className="my-3 md:w-44 w-52 mx-8 bg-white shadow-lg rounded-md ">
                                 <div className="p-8">
                                 <p className="text-center mb-3">{item.capsule_serial}</p>
@@ -74,7 +80,9 @@ const DataGrid = () => {
                             </div>
             )
 
-            ))
+            )):(
+                <div className="text-center text-red-500 text-sm">No matching data found...</div>
+            )
         }
              <div className={`modal ${preview ? "modal-show":""}`}> 
                         {
