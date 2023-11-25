@@ -12,7 +12,7 @@ const CapsuleSearch = ({ onSearch }) => {
   return (
     <div className="mb-4">
       <h3 className="text_color text-xl mb-2">Search Capsules</h3>
-      <div className="flex items-center w-full">
+      <div className="md:flex items-center w-full">
         <input
           type="text"
           value={searchTerm}
@@ -30,7 +30,7 @@ const CapsuleSearch = ({ onSearch }) => {
             setSearchBy(e.target.value);
             handleSearch(); 
           }}
-          className="border rounded py-1 px-2 mr-2 outline-none"
+          className="border rounded py-1 px-2 md:mr-2 md:my-0 my-2 mx-auto  outline-none"
         >
           <option value="capsule_serial">Capsule Serial</option>
           <option value="status">Status</option>

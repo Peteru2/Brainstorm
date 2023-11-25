@@ -68,7 +68,7 @@ const DataGrid = () => {
             <div className="text-center text_color">
                 Loading...
             </div>): dataFound ?( paginatedData.map((item, index)=>(
-                            <div className="my-3 md:w-44 w-52 mx-8 bg-white shadow-lg rounded-md ">
+                            <div className="my-3 md:w-44 w-64 mx-8 bg-white shadow-lg rounded-md ">
                                 <div className="p-8">
                                 <p className="text-center mb-3">{item.capsule_serial}</p>
                                 {/* <p>{item.details === ""?"No details":item.details}</p> */}
