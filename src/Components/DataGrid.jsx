@@ -19,16 +19,20 @@ const DataGrid = () => {
         setSelectedItemIndex(null);
         setPreview(false);
     }
-    const handleSearch = (searchTerm) => {
+    const handleSearch = (searchTerm, searchBy) => {
         if (!data) return; // Ensure data is available
       
         const searchTermLower = searchTerm.toLowerCase();
-        const filteredData = Object.values(data).filter(item =>
-          item.capsule_serial.toLowerCase().includes(searchTermLower)
-        );
+      
+        // Filter data based on the selected searchBy option
+        const filteredData = Object.values(data).filter(item => {
+          const valueToSearch = item[searchBy].toLowerCase();
+          return valueToSearch.includes(searchTermLower);
+        });
       
         setPaginatedData(filteredData.slice(startIndex, endIndex));
       };
+       
             const [currentPage, setCurrentPage] = useState(1);
             const itemsPerPage = 10; 
 
@@ -47,7 +51,7 @@ const DataGrid = () => {
             // const currentSerialNumber = (currentPage - 1) * itemsPerPage + 1
     return ( 
         <>
-                <section className="mt-14">\
+                <section className="mt-14">
                 <CapsuleSearch onSearch={handleSearch} />
                     <div>
                         <h3 className="text-center text_color text-4xl mb-4">DATA GRID</h3>
